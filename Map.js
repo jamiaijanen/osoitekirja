@@ -1,13 +1,12 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { StyleSheet, Button } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Button, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { View, TextInput } from 'react-native';
-import { Alert } from 'react-native';
+import { View } from 'react-native';
 
 export default function Map({ route }) {
     
-    const { address } = route.params;
+    const address = route.params.paramKey;
     const [region, setRegion] = useState({latitude: 0, longitude: 0, latitudeDelta: 0.0322, longitudeDelta: 0.0221});
     const [marker, setMarker] = useState({latitude: 0, longitude: 0});
 
@@ -20,20 +19,19 @@ export default function Map({ route }) {
           setMarker({ latitude: latLng.lat, longitude: latLng.lng });
         })
         .catch(error => {
-          Alert.alert('Error', error)
+          Alert.alert('Error', error.message)
         })
       }
 
     return(
         <View styles={styles.container}>
             <MapView 
-                style={styles.map}
+                style={{minHeight: '90%'}}
                 region={region}>
                 <Marker 
                     coordinate={marker}
                 />
             </MapView>
-            <TextInput style={styles.textfield} onChangeText={ address => setAddress(address) } />
             <Button onPress={find} title='Show' />
         </View>
     )
@@ -50,10 +48,5 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         height: "100%",
-    },
-    textfield: {
-        borderBottomWidth: 1,
-        width: "100%",
-        marginBottom: 10
-      }
+    }
   });

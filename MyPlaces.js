@@ -1,11 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import { Input } from 'react-native-elements';
-import { Button } from 'react-native-elements';
-import { FlatList } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { StyleSheet, View, FlatList } from 'react-native';
+import { Input, Button, ListItem } from 'react-native-elements';
 import * as SQLite from 'expo-sqlite';
 
 export default function MyPlaces({ navigation }) {
@@ -51,7 +48,7 @@ const renderItem = ({item}) => (
       <ListItem.Chevron
         name="arrow-forward"
         color="blue"
-        onPress={() => navigation.navigate('Map', {address})}
+        onPress={() => navigation.navigate('Map', {paramKey: address})}
       />
       <ListItem.Chevron 
         name="delete"
